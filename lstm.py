@@ -133,7 +133,7 @@ if __name__ == "__main__":
 
     # Test on samples
 
-        samples = [
+    samples = [
        ("Navigate to url www.hi.net/#/login .", "OPEN_WEBSITE"),
 
        ("Fill in text in BOQ Street Address line 1 EOQ .", "ENTER"),
