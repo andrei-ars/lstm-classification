@@ -108,5 +108,7 @@ if __name__ == "__main__":
 
     predictions = model.predict(X['test'])
     print("predictions:", predictions)
+    print("predictions.shape:", predictions.shape)
 
     print("Y_test:", Y['test'])
+    print("Y_test.shape:", Y['test'].shape)
