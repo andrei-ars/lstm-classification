@@ -46,7 +46,8 @@ def create_model(input_length, output_length):
     model.add(tf.keras.layers.Embedding(MAX_NB_WORDS, EMBEDDING_DIM, input_length=input_length))
     model.add(tf.keras.layers.SpatialDropout1D(0.2))
     model.add(tf.
-        keras.layers.LSTM(50, dropout=0.2, recurrent_dropout=0.2))
+        keras.layers.LSTM(100, dropout=0.2, recurrent_dropout=0.2))
+    #model.add(tf.keras.layers.Dense(300, activation='relu'))
     model.add(tf.keras.layers.Dense(output_length, activation='softmax'))
     model.compile(loss='categorical_crossentropy', optimizer='adam', metrics=['accuracy'])
     return model
@@ -112,6 +113,8 @@ if __name__ == "__main__":
     elif MODE == "test": # test saved model
         model = load_model(MODEL_PATH)
 
+
+    print(model.summary())
 
     # Check on test data
 
