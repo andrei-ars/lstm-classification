@@ -121,4 +121,5 @@ if __name__ == "__main__":
 
     print(predict_labels)
     print(test_labels)
-    np.sum(predict_labels == test_labels) / len(predict_labels)
+    test_acc = np.sum(predict_labels == test_labels) / len(predict_labels)
+    print("test_acc = {}".format(test_acc))
