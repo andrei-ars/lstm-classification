@@ -117,23 +117,22 @@ if __name__ == "__main__":
     predictions = model.predict(X['test'])
     print("predictions:", predictions)
     print("predictions.shape:", predictions.shape)
-
     print("Y_test:", Y['test'])
     print("Y_test.shape:", Y['test'].shape)
 
     convert_to_index = lambda arr: np.apply_along_axis(np.argmax, 1, arr)
+    predicted_index = convert_to_index(predictions)
+    test_index = convert_to_index(Y['test'])
 
-    predict_labels = convert_to_index(predictions)
-    test_labels = convert_to_index(Y['test'])
-
-    print(predict_labels)
-    print(test_labels)
-    test_acc = np.sum(predict_labels == test_labels) / len(predict_labels)
+    print(predicted_index)
+    print(test_index)
+    test_acc = np.sum(predicted_index == test_index) / len(predicted_index)
     print("test_acc = {}".format(test_acc)) # test_acc = 0.967799
 
 
 
     # Test on samples
+    print("\n\n Test on examples")
 
     samples = [
        ("Navigate to url www.hi.net/#/login .", "OPEN_WEBSITE"),
@@ -178,3 +177,24 @@ if __name__ == "__main__":
        ('verify BOQ New Quote EOQ is visible on the page .', "VERIFY"),
        ('verify BOQ INSIDEQOUTES1 EOQ is visible on the page .', "VERIFY"),
     ]
+
+
+    input_texts = list(map(lambda x: x[0], samples))
+    true_labels = list(map(lambda x: x[1], samples))
+    predictions = model.predict(input_texts)
+    predicted_index = convert_to_index(predictions)
+    predicted_labels = list(map(lambda index: label_names['train'][index], predicted_index))
+
+    count = 0
+    for i in range(len(samples)):
+        true_label = true_labels[i]
+        predicted_label = predicted_labels[i]
+        if true_label == predicted_label:
+            print("+ {}".format(predicted_label))
+            count += 1
+        else:
+            print("- wrong prediction: true={}, predicted={}".format(true_label, predicted_label))
+
+    total_count = len(samples)
+    acc = count / total_count
+    print("\nacc = {:.4f}  [{}/{}]".format(acc, count, total_count))    
