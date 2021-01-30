@@ -95,7 +95,17 @@ if __name__ == "__main__":
 
     #print(x_train)
 
-    model = create_model(input_length=X['train'].shape[1], output_length=35)
-    train_model(model, X, Y)
+    MODE = "test"
 
-    model.save(MODEL_PATH)
+    if MODE == "train":
+        model = create_model(input_length=X['train'].shape[1], output_length=35)
+        train_model(model, X, Y)
+        model.save(MODEL_PATH)
+
+    elif MODE == "test":
+        model = load_model(MODEL_PATH)
+
+    predictions = model.predict(X['test'])
+    print("predictions:", predictions)
+
+    print("Y_test:", Y['test'])
