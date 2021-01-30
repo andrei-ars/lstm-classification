@@ -80,13 +80,15 @@ if __name__ == "__main__":
 
     X = {}
     Y = {}
+    label_names = {}
     for mode in ['train', 'valid', 'test']:
         #X[mode] = tokenizer.texts_to_sequences(dataset[mode]['text'])
         X[mode] = tokenizer.texts_to_sequences(df[mode].text)
         X[mode] = pad_sequences(X[mode], maxlen=MAX_SEQUENCE_LENGTH)
         y_encode = pd.get_dummies(df[mode].label)
+        label_names[mode] = list(y_encode.columns)
         Y[mode] = y_encode.values
-        print(y_encode.columns)
+        print("{}: {}".format(mode, label_names[mode]))
         print("Y[{}] shape: {}".format(mode, Y[mode].shape))
 
         #x_test = tokenizer.texts_to_sequences(dataset['test']['text'])
