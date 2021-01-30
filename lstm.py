@@ -102,14 +102,14 @@ if __name__ == "__main__":
 
     #print(x_train)
 
-    MODE = "test"
+    MODE = "train"
 
     if MODE == "train":
         model = create_model(input_length=X['train'].shape[1], output_length=35)
         train_model(model, X, Y)
         model.save(MODEL_PATH)
 
-    elif MODE == "test":
+    elif MODE == "test": # test saved model
         model = load_model(MODEL_PATH)
 
 
