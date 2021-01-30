@@ -84,7 +84,9 @@ if __name__ == "__main__":
         #X[mode] = tokenizer.texts_to_sequences(dataset[mode]['text'])
         X[mode] = tokenizer.texts_to_sequences(df[mode].text)
         X[mode] = pad_sequences(X[mode], maxlen=MAX_SEQUENCE_LENGTH)
-        Y[mode] = pd.get_dummies(df[mode].label).values
+        y_encode = pd.get_dummies(df[mode].label)
+        Y[mode] = y_encode.values
+        print(y_encode.columns)
         print("Y[{}] shape: {}".format(mode, Y[mode].shape))
 
         #x_test = tokenizer.texts_to_sequences(dataset['test']['text'])
@@ -107,13 +109,15 @@ if __name__ == "__main__":
     elif MODE == "test":
         model = load_model(MODEL_PATH)
 
+
+    # Check on test data
+
     predictions = model.predict(X['test'])
     print("predictions:", predictions)
     print("predictions.shape:", predictions.shape)
 
     print("Y_test:", Y['test'])
     print("Y_test.shape:", Y['test'].shape)
-
 
     convert_to_index = lambda arr: np.apply_along_axis(np.argmax, 1, arr)
 
@@ -123,4 +127,52 @@ if __name__ == "__main__":
     print(predict_labels)
     print(test_labels)
     test_acc = np.sum(predict_labels == test_labels) / len(predict_labels)
-    print("test_acc = {}".format(test_acc))
+    print("test_acc = {}".format(test_acc)) # test_acc = 0.967799
+
+
+
+    # Test on samples
+
+        samples = [
+       ("Navigate to url www.hi.net/#/login .", "OPEN_WEBSITE"),
+
+       ("Fill in text in BOQ Street Address line 1 EOQ .", "ENTER"),
+       ('Set text in XPATH .', "ENTER"),
+
+       ("choose XPATH New PAN Indian Citizen Form 49A .", "SELECT"),
+       ('select BOQ Type EOQ .', "SELECT"),
+       ('select Type .', "SELECT"),
+       ('select .', "SELECT"),
+       ('select BOQ Partnership Firm EOQ in BOQ PAN_APPLCNT_STATUS EOQ .', "SELECT"),
+
+       ("Click XPATH .", "CLICK"),
+       ("Press XPATH .",  "CLICK"),
+       ('click BOQ Log In EOQ .',  "CLICK"),
+       ('Click on first BOQ MoreVert EOQ .', "CLICK"),
+
+       ("assert password after username .", "VERIFY"),
+       ("assert username .", "VERIFY"),
+       ('Verify text BOQ Disable Test Case EOQ .', "VERIFY"),
+
+       ("Verify XPATH width is BOQ 235px EOQ .", "VERIFY_CSSPROP"),
+
+       ("Verify XPATH is enabled .", "VERIFY_XPATH"),
+       ("Verify XPATH is google .", "VERIFY_XPATH"),
+       ('Verify XPATH contains Current or contains events .', "VERIFY_XPATH"),
+       ('Verify XPATH contains Current or ends with events .', "VERIFY_XPATH"),
+       ('Verify XPATH is Related Changes .', "VERIFY_XPATH"),
+       ('verify XPATH is ername .', "VERIFY_XPATH"),
+       
+       ('scroll down .', "SCROLL_ACTION"),
+       ('scroll up .', "SCROLL_ACTION"),
+       
+       ('Hit Enter .', "HIT"),
+       ('Hit escape .', "HIT"),
+       ('Hit spacebar .', "HIT"),
+       ('hit tab .', "HIT"),
+       ('hit up arrow key .', "HIT"),
+       ('Begin block Block1 .', "BEGIN"),
+
+       ('verify BOQ New Quote EOQ is visible on the page .', "VERIFY"),
+       ('verify BOQ INSIDEQOUTES1 EOQ is visible on the page .', "VERIFY"),
+    ]
