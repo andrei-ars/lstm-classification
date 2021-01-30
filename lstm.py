@@ -112,3 +112,13 @@ if __name__ == "__main__":
 
     print("Y_test:", Y['test'])
     print("Y_test.shape:", Y['test'].shape)
+
+
+    convert_to_index = lambda arr: np.apply_along_axis(np.argmax, 1, arr)
+
+    predict_labels = convert_to_index(predictions)
+    test_labels = convert_to_index(Y['test'])
+
+    print(predict_labels)
+    print(test_labels)
+    np.sum(predict_labels == test_labels) / len(predict_labels)
