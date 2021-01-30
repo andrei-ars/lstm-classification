@@ -15,6 +15,8 @@ MAX_SEQUENCE_LENGTH = 50 # max length of each entry (sentence), including paddin
 EMBEDDING_DIM = 50      # embedding dimensions for word vectors (word2vec/GloVe)
 GLOVE_DIR = "~/glove.6B."+str(EMBEDDING_DIM)+"d.txt"
 
+MODEL_PATH = "model.h5"
+
 
 def save_df_to_file(df, filename):
     dict1 = df.to_dict('records')
@@ -54,7 +56,7 @@ def train_model(model, X, Y):
     #X_VALID = dataset['valid']['text']
     #Y_VALID = dataset['valid']['label']
 
-    epochs = 100
+    epochs = 40
     batch_size = 64
     history = model.fit(
         X['train'], 
@@ -95,3 +97,5 @@ if __name__ == "__main__":
 
     model = create_model(input_length=X['train'].shape[1], output_length=35)
     train_model(model, X, Y)
+
+    model.save(MODEL_PATH)
