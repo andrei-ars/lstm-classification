@@ -14,7 +14,7 @@ from tensorflow.keras.models import load_model
 MAX_NB_WORDS = 5000    # max no. of words for tokenizer
 MAX_SEQUENCE_LENGTH = 50 # max length of each entry (sentence), including padding
 #VALIDATION_SPLIT = 0.2   # data for validation (not used in training)
-EMBEDDING_DIM = 50      # embedding dimensions for word vectors (word2vec/GloVe)
+EMBEDDING_DIM = 60      # embedding dimensions for word vectors (word2vec/GloVe)
 GLOVE_DIR = "~/glove.6B."+str(EMBEDDING_DIM)+"d.txt"
 
 MODEL_PATH = "model.h5"
