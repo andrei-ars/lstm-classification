@@ -54,7 +54,7 @@ def train_model(model, X, Y):
     #X_VALID = dataset['valid']['text']
     #Y_VALID = dataset['valid']['label']
 
-    epochs = 10
+    epochs = 50
     batch_size = 64
     history = model.fit(
         X['train'], 
