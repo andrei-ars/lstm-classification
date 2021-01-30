@@ -7,6 +7,7 @@ from tensorflow.keras.preprocessing.text import Tokenizer
 from tensorflow.keras import regularizers, initializers, optimizers, callbacks
 from tensorflow.keras.preprocessing.sequence import pad_sequences
 from tensorflow.keras.preprocessing.text import Tokenizer
+from tensorflow.keras.models import load_model
 #from tensorflow.keras.utils.np_utils import to_categorical
 
 MAX_NB_WORDS = 5000    # max no. of words for tokenizer
