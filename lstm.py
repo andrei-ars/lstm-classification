@@ -181,7 +181,10 @@ if __name__ == "__main__":
 
     input_texts = list(map(lambda x: x[0], samples))
     true_labels = list(map(lambda x: x[1], samples))
-    predictions = model.predict(input_texts)
+
+    tokenized_texts = tokenizer.texts_to_sequences(input_texts)
+    tokenized_texts = pad_sequences(tokenized_texts, maxlen=MAX_SEQUENCE_LENGTH)
+    predictions = model.predict(tokenized_texts)
     predicted_index = convert_to_index(predictions)
     predicted_labels = list(map(lambda index: label_names['train'][index], predicted_index))
 
