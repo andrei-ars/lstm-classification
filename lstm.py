@@ -47,7 +47,7 @@ def create_model(input_length, output_length):
     model.add(tf.keras.layers.SpatialDropout1D(0.2))
     model.add(tf.
         keras.layers.LSTM(100, dropout=0.2, recurrent_dropout=0.2))
-    #model.add(tf.keras.layers.Dense(300, activation='relu'))
+    model.add(tf.keras.layers.Dense(300, activation='relu'))
     model.add(tf.keras.layers.Dense(output_length, activation='softmax'))
     model.compile(loss='categorical_crossentropy', optimizer='adam', metrics=['accuracy'])
     return model
